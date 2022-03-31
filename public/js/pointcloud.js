@@ -1,5 +1,5 @@
-import { GisTool } from './GISintegration.js';
-// import Loader from './loading.js'
+// import { GisTool } from './GISintegration.js';
+import Loader from './loading.js'
 
 let geometry;
 
@@ -10,7 +10,7 @@ export default class PointCloudExtension extends Autodesk.Viewing.Extension {
         this._button = null;
 
         //gis added
-        this.tool = new GisTool();
+        // this.tool = new GisTool();
 
         this.zaxisOffset = -1.5;
 
@@ -27,20 +27,20 @@ export default class PointCloudExtension extends Autodesk.Viewing.Extension {
 
     load() {
         // window.renderPointCloud = false;
-        // console.log('Point Cloud extension loaded')
-        // var loader = new Loader(); //this loads the button
+        console.log('Point Cloud extension loaded')
+        var loader = new Loader(); //this loads the button
         // var simulationData = 
-        // loader.start();
+        loader.start();
         // console.log(test.simulationObj);
         // this._renderCloud(simulationData);
-        // return true;
+        return true;
 
         //gis added
-        this.viewer.toolController.registerTool(this.tool);
-        console.log('GisToolExtension loaded.');
-        // var loader = new Loader();
-        // loader.start
-        return true;
+        // this.viewer.toolController.registerTool(this.tool);
+        // console.log('GisToolExtension loaded.');
+        // // var loader = new Loader();
+        // // loader.start
+        // return true;
         
     }
 
@@ -55,26 +55,26 @@ export default class PointCloudExtension extends Autodesk.Viewing.Extension {
     }
 
     unload() {
-		//   // Clean our UI elements if we added any
-        //  if (this._group) {
-        //     this._group.removeControl(this._button);
-        //     if (this._group.getNumberOfControls() === 0) {
-        //         this.viewer.toolbar.removeControl(this._group);
-        //     }
-        // }
-        // console.log('PointCloudExtension has been unloaded');
-        // return true;
-
-        //gis added
-        this.viewer.toolController.deregisterTool(this.tool);
-        if (this._group) {
+		// Clean our UI elements if we added any
+         if (this._group) {
             this._group.removeControl(this._button);
             if (this._group.getNumberOfControls() === 0) {
                 this.viewer.toolbar.removeControl(this._group);
             }
         }
-        console.log('GisToolExtension unloaded.');
+        console.log('PointCloudExtension has been unloaded');
         return true;
+
+        //gis added
+        // this.viewer.toolController.deregisterTool(this.tool);
+        // if (this._group) {
+        //     this._group.removeControl(this._button);
+        //     if (this._group.getNumberOfControls() === 0) {
+        //         this.viewer.toolbar.removeControl(this._group);
+        //     }
+        // }
+        // console.log('GisToolExtension unloaded.');
+        // return true;
     }
     
     /**
@@ -160,68 +160,68 @@ export default class PointCloudExtension extends Autodesk.Viewing.Extension {
 	
 	onToolbarCreated() {
         // Create a new toolbar group if it doesn't exist
-        // this._group = this.viewer.toolbar.getControl('allMyAwesomeExtensionsToolbar');
-        // if (!this._group) {
-        //     this._group = new Autodesk.Viewing.UI.ControlGroup('allMyAwesomeExtensionsToolbar');
-        //     this.viewer.toolbar.addControl(this._group);
-        // }
-
-        // // Add a new button to the toolbar group
-        // this._button = new Autodesk.Viewing.UI.Button('myAwesomeExtensionButton');
-        // this._button.onClick = (ev) => {
-            
-        //     window.renderPointCloud = true;
-        //     this._renderCloud();
-        //     if(window.legendOFF){
-        //         this._appearLegend();
-        //         window.legendOFF = false;
-        //     }
-
-        //     var i = 0;
-                
-        //     var interval = setInterval(() => {
-        //         this._updatePointCloudGeometry(simulation.Frames[i]);
-        //         if (++i == simulation.Frames.length) window.clearInterval(interval);
-        //     }, 50);
-        // };
-
-        // this._button.setToolTip('Sim Object');
-        // this._button.addClass('connectCadmiumIcon');
-        // this._group.addControl(this._button);
-
-        //gis added
-        // Create a new toolbar group if it doesn't exist
         this._group = this.viewer.toolbar.getControl('allMyAwesomeExtensionsToolbar');
         if (!this._group) {
             this._group = new Autodesk.Viewing.UI.ControlGroup('allMyAwesomeExtensionsToolbar');
             this.viewer.toolbar.addControl(this._group);
         }
 
-        const controller = this.viewer.toolController;
-
         // Add a new button to the toolbar group
         this._button = new Autodesk.Viewing.UI.Button('myAwesomeExtensionButton');
         this._button.onClick = (ev) => {
-            const isActivated = controller.isToolActivated('gis-tool');
-            if(isActivated){
-                controller.deactivateTool('gis-tool');
-                this._button.setState(Autodesk.Viewing.UI.Button.State.INACTIVE);
-            } else {
-                controller.activateTool('gis-tool');
-                this._button.setState(Autodesk.Viewing.UI.Button.State.ACTIVE);
-            }
             
-            // window.renderPointCloud = true;
-            // this._renderCloud();
-            // if(window.legendOFF){
-            //     this._appearLegend();
-            //     window.legendOFF = false;
-            // }
+            window.renderPointCloud = true;
+            this._renderCloud();
+            if(window.legendOFF){
+                this._appearLegend();
+                window.legendOFF = false;
+            }
+
+            var i = 0;
+                
+            var interval = setInterval(() => {
+                this._updatePointCloudGeometry(simulation.Frames[i]);
+                if (++i == simulation.Frames.length) window.clearInterval(interval);
+            }, 50);
         };
 
-        this._button.setToolTip('GIS Tool');
+        this._button.setToolTip('Sim Object');
         this._button.addClass('connectCadmiumIcon');
         this._group.addControl(this._button);
+
+        //gis added
+        // Create a new toolbar group if it doesn't exist
+        // this._group = this.viewer.toolbar.getControl('allMyAwesomeExtensionsToolbar');
+        // if (!this._group) {
+        //     this._group = new Autodesk.Viewing.UI.ControlGroup('allMyAwesomeExtensionsToolbar');
+        //     this.viewer.toolbar.addControl(this._group);
+        // }
+
+        // const controller = this.viewer.toolController;
+
+        // // Add a new button to the toolbar group
+        // this._button = new Autodesk.Viewing.UI.Button('myAwesomeExtensionButton');
+        // this._button.onClick = (ev) => {
+        //     const isActivated = controller.isToolActivated('gis-tool');
+        //     if(isActivated){
+        //         controller.deactivateTool('gis-tool');
+        //         this._button.setState(Autodesk.Viewing.UI.Button.State.INACTIVE);
+        //     } else {
+        //         controller.activateTool('gis-tool');
+        //         this._button.setState(Autodesk.Viewing.UI.Button.State.ACTIVE);
+        //     }
+            
+        //     // window.renderPointCloud = true;
+        //     // this._renderCloud();
+        //     // if(window.legendOFF){
+        //     //     this._appearLegend();
+        //     //     window.legendOFF = false;
+        //     // }
+        // };
+
+        // this._button.setToolTip('GIS Tool');
+        // this._button.addClass('connectCadmiumIcon');
+        // this._group.addControl(this._button);
     }
 
     _updatePointCloudGeometry(frame) {

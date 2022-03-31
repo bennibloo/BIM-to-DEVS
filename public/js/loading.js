@@ -12,8 +12,8 @@ export default class Loader{
 
         var requests = [];
 
-        requests.push(Net.File('http://localhost:3000/filesToUpload/house_4_windows.json', 'scenario.json'));
-        requests.push(Net.File('http://localhost:3000/filesToUpload/output_messages_house.txt', 'messages.txt'));
+        // requests.push(Net.File('http://localhost:3000/filesToUpload/house_4_windows.json', 'scenario.json'));
+        // requests.push(Net.File('http://localhost:3000/filesToUpload/output_messages_house.txt', 'messages.txt'));
 
         // requests.push(Net.File('http://localhost:3000/filesToUpload/InputScenario__OfficeModel.json', 'scenario.json'));
         // requests.push(Net.File('http://localhost:3000/filesToUpload/output_messages_Ofc.txt', 'messages.txt'));

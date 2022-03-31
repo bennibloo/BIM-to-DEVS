@@ -12,8 +12,8 @@ function launchViewer(urn) {
     'Autodesk.DocumentBrowser',
     // 'IntegrationCode',
     // 'CallingFunction',
-    'PointCloudExtension'
-    // 'GisToolExtension'
+    // 'PointCloudExtension',
+    'GISExtension'
   ] 
   });
     viewer.start();
