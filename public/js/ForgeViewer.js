@@ -10,11 +10,11 @@ function launchViewer(urn) {
     viewer = new Autodesk.Viewing.GuiViewer3D(document.getElementById('forgeViewer'), { 
       extensions: [ 
     'Autodesk.DocumentBrowser',
-    'DataExtractExtension'
+    'DataExtractExtension',
     // 'IntegrationCode',
     // 'CallingFunction',
     // 'PointCloudExtension',
-    // 'GISExtension'
+    'GisToolExtension'
   ] 
   });
     viewer.start();
