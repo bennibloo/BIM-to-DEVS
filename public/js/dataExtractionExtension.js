@@ -59,19 +59,26 @@ class DataExtractExtension extends Autodesk.Viewing.Extension {
                 var data = [];
                 for(var i=0; i<elements.length; i++){
                     var category = elements[i].properties[0].displayValue;
-                     if(category == "Revit Walls" 
-                     || category == "Revit Windows" || 
-                     category == "Revit Doors" || 
-                     category == "Revit Furniture Systems" || 
-                     category == "Revit Mechanical Equipment") {
-                        var bbox = thisRef.getBoundingBox(elements[i].dbId);
+                     if(
+                    // category == "Revit Walls" 
+                    //  || category == "Revit Windows" || 
+                    //  category == "Revit Doors" || 
+                    //  category == "Revit Furniture Systems" || 
+                    //  category == "Revit Mechanical Equipment" ||
+                     category == "Revit Rooms") {
+                        // var bbox = thisRef.getBoundingBox(elements[i].dbId);
+                        var bbox = thisRef.getElementBoundingBox(viewer.model, elements[i].dbId);
                         var objType = category.substring(6, category.length-1);
+                        if(bbox == null) continue;
                         data.push({"id": elements[i].dbId, "type": objType, "bbox": bbox});
                     }
                 }
-                DataExtractExtension.formatObjDict(data);  // remove negative values
-                var dataStr = JSON.stringify(data).replace(/\"([^(\")"]+)\":/g,"$1:");
-                DataExtractExtension.drawCanvas(data);
+
+                var newData = Array.apply(null, Array(3)).map(function (x, i) { return data[i+3]; })
+
+                DataExtractExtension.formatObjDict(newData);  // remove negative values
+                var dataStr = JSON.stringify(newData).replace(/\"([^(\")"]+)\":/g,"$1:");
+                // DataExtractExtension.drawCanvas(data);
                 DataExtractExtension.download(dataStr, "config.json", "application/json");
             }
         );
@@ -87,8 +94,8 @@ class DataExtractExtension extends Autodesk.Viewing.Extension {
     getElementBoundingBox(model, dbid) {
         const tree = model.getInstanceTree();
         const frags = model.getFragmentList();
-        let nodeBounds = new THREE.Box3();
-        let fragBounds = new THREE.Box3();
+        let nodeBounds = new THREE.Box2();
+        let fragBounds = new THREE.Box2();
         tree.enumNodeFragments(dbid, function (fragid) {
             frags.getWorldBounds(fragid, fragBounds);
             nodeBounds.union(fragBounds);

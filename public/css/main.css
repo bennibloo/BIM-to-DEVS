@@ -4,18 +4,31 @@ html, body {
   }
   
   .fill {
-    height: calc(100vh - 100px);
+    height: 250px;
+    /* height: calc(100vh - 100px); */
   }
   
   body {
     padding-top: 60px; /* space for the top nav bar */
     margin-right: 30px;
   }
+
+  .iframe{
+    width: 100%;
+  }
+
+  iframe{
+    width: 100%;
+    position:absolute;
+    bottom:0;
+    height: 600px;
+  }
   
   #appBuckets {
     overflow: auto;
     width: 100%;
-    height: calc(100vh - 150px);
+    height: 250px;
+    /* height: calc(100vh - 150px); */
   }
   
   #forgeViewer {
